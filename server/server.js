@@ -6,6 +6,12 @@ const mysql = require("mysql2");
 //Variables
 const app = express();
 const PORT = 8080;
+const connection = mysql.createConnection({
+  host: "127.0.0.1",
+  user: "root",
+  password: "Copsreloaded62$",
+  database: "RandomWebApp",
+});
 
 //Functions
 
@@ -24,5 +30,9 @@ app.listen(PORT, () => {
 
 // Routing
 app.get("/api/dev", (req, res) => {
-  res.status(200).json({ body: "Hello from the server!" });
+  connection.query("select * from _dev;", (err, results, fields) => {
+    res.status(200).json({
+      body: "Database user: " + results[0].message,
+    });
+  });
 });
